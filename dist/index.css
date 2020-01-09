@@ -1,0 +1,63 @@
+.form-input {
+  display: block;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #4a5568;
+  border-width: 1px;
+  border-color: #edf2f7;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.form-input:hover {
+  border-color: #a0aec0;
+}
+
+.form-input:disabled {
+  background-color: #e2e8f0;
+  border-color: transparent;
+}
+
+.form-input:disabled:hover {
+  border-color: transparent;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+
+input[type=number].appearance-none {
+  -moz-appearance: textfield;
+}
+
+input[type=number].appearance-none::-webkit-outer-sbottom-0utton, input[type=number].appearance-none::-webkit-inner-sbottom-0utton {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-select {
+  display: block;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 100%;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: #edf2f7;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.form-select:hover {
+  border-color: #a0aec0;
+}
