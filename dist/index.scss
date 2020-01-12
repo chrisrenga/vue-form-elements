@@ -1,3 +1,7 @@
+@tailwind base;
+
+@tailwind components;
+
 .form-input {
     @apply block appearance-none w-full py-2 px-2 text-base bg-white text-gray-700 border border-gray-200 rounded shadow;
 
@@ -12,13 +16,33 @@
             @apply border-transparent;
         }
     }
+
+    &::-webkit-search-cancel-button {
+        @apply hidden;
+    }
+}
+
+.counter-btn {
+    @apply flex items-center justify-center border rounded-full w-8 h-8 shadow bg-gray-400;
+
+    &:hover {
+        @apply bg-gray-600;
+    }
+
+    &:disabled {
+        @apply bg-gray-300 border-transparent;
+
+        &:hover {
+            @apply border-transparent;
+        }
+    }
 }
 
 /* Hide HTML5 Up and Down arrows. */
-input[type="number"].appearance-none {
+input[type=number].appearance-none {
     -moz-appearance: textfield;
 
-    &::-webkit-outer-sbottom-0utton, &::-webkit-inner-sbottom-0utton {
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
         -webkit-appearance: none;
         @apply m-0;
     }
@@ -31,3 +55,5 @@ input[type="number"].appearance-none {
         @apply border-gray-500;
     }
 }
+
+@tailwind utilities;

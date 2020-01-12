@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../dist/index.css">
+</head>
+<body>
+
+    <div id="app">
+        aad
+        <form-input
+            label="test"
+            :form="{test: ''}"
+            model="test"
+        ></form-input
+            >
+    </div>
+
+    <script src="../dist/index.js"></script>
+
+    <script>
+        import Vue from 'vue';
+        import FormElements from '@chrisrenga/vue-form-elements'
+        Vue.use(FormElements);
+        let app = new Vue({
+
+        }).$mount('#app')
+    </script>
+</body>
+</html>

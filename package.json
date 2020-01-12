@@ -1,16 +1,17 @@
 {
-  "name": "vue-form-elements",
+  "name": "@chrisrenga/vue-form-elements",
   "description": "Vue.js Form Elements Library",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "chrisrenga",
   "private": false,
-  "main": "dist/index.js",
-  "browser": "dist/index.js",
+  "main": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/chrisrenga/vue-form-elements.git"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "npm run development",
@@ -34,6 +35,11 @@
     "sass-loader": "^8.0.0",
     "tailwindcss": "^1.1.4",
     "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "form-backend-validation": "^2.3.9",
+    "lodash": "^4.17.15"
+  },
+  "dependencies": {
+    "vue-clickaway": "^2.2.2"
   }
 }

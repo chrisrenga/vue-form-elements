@@ -1,5 +1,4 @@
 let mix = require('laravel-mix');
-let path = require("path");
 
 require("laravel-mix-tailwind");
 require("laravel-mix-purgecss");
@@ -15,8 +14,3 @@ if (mix.inProduction()) {
         folders: ['src', 'dist']
     })
 }
-
-mix.browserSync({
-	proxy: path.basename(__dirname) + '.test',
-	browser: 'google chrome'
-});

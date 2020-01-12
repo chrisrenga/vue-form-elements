@@ -1,31 +1,34 @@
-// import { events } from './events'
-
-import FormInput from './FormInput.vue'
-// import FormSelect from './components/FormSelect.vue'
-// import FormCounter from './components/FormCounter.vue'
+import Creator from './components/Creator'
+import Input from './components/Input'
+import Money from './components/Money'
+import Select from './components/Select'
+import Counter from './components/Counter'
+import Search from './components/Search'
+import Textarea from './components/Textarea'
 
 export {
-	FormInput,
+    Creator,
+    Input,
+    Money,
+    Select,
+    Counter,
+    Search,
+    Textarea,
 }
 
-// Create module definition for Vue.use()
-const plugin = {
+export default {
     install(Vue, args = {}) {
+        if (this.installed) return
 
-        Vue.component('form-input', FormInput);
-        this.installed = true;
+        this.installed = true
+        let keyword = 'v-form-';
+
+        Vue.component(keyword + 'creator', Creator)
+        Vue.component(keyword + 'input', Input)
+        Vue.component(keyword + 'money', Money)
+        Vue.component(keyword + 'select', Select)
+        Vue.component(keyword + 'counter', Counter)
+        Vue.component(keyword + 'search', Search)
+        Vue.component(keyword + 'textarea', Textarea)
     }
-};
-
-export default plugin;
-
-// Auto-install
-let GlobalVue = null
-if (typeof window !== 'undefined') {
-	GlobalVue = window.Vue
-} else if (typeof global !== 'undefined') {
-	GlobalVue = global.Vue
-}
-if (GlobalVue) {
-	GlobalVue.use(plugin)
 }
