@@ -18,7 +18,7 @@
         <input
             @change="changed"
             @input="changed"
-            v-model="form[name]"
+            v-model.number="form[name]"
             type="number"
             min="1"
             class="text-center appearance-none px-0 text-xl mx-1 w-10 bg-transparent"

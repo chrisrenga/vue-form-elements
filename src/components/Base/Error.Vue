@@ -1,6 +1,6 @@
 <template>
 <div
-    v-if="show && errors.has(name)"
+    v-if="errors && show && errors.has(name)"
     class="text-red-500 mb-2"
 >
     <div v-for="(error, index) in errors.get(name)" :key="index">{{ error }}</div>
@@ -11,8 +11,7 @@
 export default {
     props: {
         errors: {
-            type: Object,
-            required: true,
+            default: null,
         },
 
         name: {

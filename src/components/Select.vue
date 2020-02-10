@@ -13,8 +13,9 @@
             class="form-select"
             :required="required"
             :name="name"
+            :disabled="disabled"
         >
-            <option value=""></option>
+            <option value="" v-text="placeholder"></option>
             <option
                 v-for="(option, index) in options"
                 :key="index"

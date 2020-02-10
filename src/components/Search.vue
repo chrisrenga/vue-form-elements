@@ -10,18 +10,23 @@
 
     <div class="relative flex items-center">
         <div class="absolute inset-y-0 left-0 pl-2 pointer-events-none flex items-center text-gray-600">
-            <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path></svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                class="fill-current w-4 h-4"
+            ><path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path></svg>
         </div>
 
         <input
             ref="formElement"
             @click="open"
             @focus="open"
-            @input="handleInput"
+            @keydown.stop=""
+            @input.stop="handleInput"
             @keydown.enter.prevent="chooseSelected"
             @keydown.down.prevent="move(1)"
             @keydown.up.prevent="move(-1)"
-            @keyup="form.errors.clear(name)"
+            @keyup="showErrors ? form.errors.clear(name) : null"
             v-model="query"
             type="search"
             class="form-input px-8"
@@ -29,6 +34,7 @@
             :placeholder="placeholder"
             spellcheck="false"
             :autofocus="autofocus"
+            autocomplete="something-new"
         />
 
         <button
@@ -38,41 +44,60 @@
             tabindex="-1"
             class="absolute p-2 pr-3 inset-y-0 right-0 flex items-center text-gray-600"
         >
-
             <svg
-                version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 1000 1000"
-                class="fill-current h-3 w-3"
-            >
-            <path d="M538.7,500L980.5,58.2c6-6,9.5-14.1,9.5-22.3c0-7.1-2.7-13.7-7.5-18.5c-4.8-4.8-11.4-7.5-18.5-7.5c-8.1,0-16.2,3.5-22.2,9.5L500,461.3L58.2,19.5c-6-6-14.1-9.5-22.2-9.5c-7.1,0-13.7,2.7-18.5,7.5C12.7,22.2,10,28.8,10,36c0,8.1,3.5,16.1,9.5,22.2L461.3,500L19.5,941.8c-5.8,5.8-9.1,13.2-9.5,20.9c-0.3,7.6,2.3,14.7,7.4,19.8c4.8,4.8,11.4,7.4,18.5,7.4c8.1,0,16.2-3.4,22.2-9.5L500,538.7l441.8,441.8c11.3,11.3,30.4,12.2,40.7,2c10.7-10.7,9.8-28.9-2-40.7L538.7,500z"/>
-            </svg>
+                viewBox="0 0 20 20"
+                class="fill-current h-4 w-4"
+            ><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
 
         </button>
+    </div>
+
+    <!-- Loader -->
+    <div
+        v-if="loading && url"
+        class="bg-white py-3 overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto z-50"
+    >
+        <loader class="text-60" width="40" />
+    </div>
+
+    <!-- No Results Found -->
+    <div
+        v-if="shouldShowNoResults"
+        class="bg-white overflow-hidden absolute rounded-lg shadow-lg w-full mt-2 max-h-search overflow-y-auto z-50"
+    >
+        <h3 class="text-xs uppercase tracking-wide text-80 bg-40 py-4 px-3">
+            Nessun risultato
+        </h3>
     </div>
 
     <div
         v-if="show"
         ref="container"
-        class="absolute overflow-y-scroll scrolling-touch text-sm bg-white shadow -mt-1 rounded z-50 w-full"
+        class="absolute overflow-y-scroll scrolling-touch text-sm bg-white shadow-lg rounded z-50 w-full"
         tabindex="-1"
-        style="max-height: 155px;"
+        style="max-height: 255px; max-width: 600px;"
     >
         <div
-            v-for="(result, index) in results"
-            :key="index"
-            :ref="index === selected ? 'selected' : null"
-            class="px-4 py-2 cursor-pointer hover:bg-gray-400 text-left"
-            @click.prevent="choose(result)"
-            :class="{
-                [`search-input-item-${index}`]: true,
-                'hover:bg-30': index !== selected,
-                'bg-blue-400 text-white': index === selected
-            }"
-            :selected="index === selected"
+            v-for="group in formattedResults"
+            class="text-left"
         >
-            {{ getResultValue(result) }}
+            <div v-if="group.resourceTitle" class="uppercase tracking-wide text-80 bg-gray-200 py-2 px-3">
+                {{ group.resourceTitle }}
+            </div>
+
+            <div
+                v-for="item in group.items"
+                :key="item.resourceName + ' ' + item.index"
+                :ref="item.index === selected ? 'selected' : null"
+                class="px-4 py-2 cursor-pointer hover:bg-gray-400 text-left"
+                @click.prevent="choose(item)"
+                :class="{
+                    'hover:bg-30': item.index != selected,
+                    'bg-blue-400 text-white': item.index == selected
+                }"
+                v-html="getResultValue(item)"
+            ></div>
         </div>
     </div>
 </layout>
@@ -83,6 +108,7 @@ import { mixin as clickaway } from 'vue-clickaway'
 
 const debounce  = require('lodash/debounce')
 const get  = require('lodash/get')
+const filter  = require('lodash/filter')
 
 export default {
     props: {
@@ -91,14 +117,23 @@ export default {
             default: null,
         },
 
+        params: {
+            type: Object,
+            default: () => {},
+        },
+
         resultName: {
             type: String,
-            default: 'descrizione',
+            default: 'searchResult',
         },
 
         resultValue: {
             type: String,
             default: 'id',
+        },
+
+        search: {
+            default: null,
         },
     },
 
@@ -106,8 +141,10 @@ export default {
 
     data() {
         return {
+            loading: false,
+            currentlySearching: false,
             show: false,
-            query: this.value,
+            query: this.search,
             results: [],
             selected: 0,
         }
@@ -124,8 +161,62 @@ export default {
             });
         },
 
-        value(newVal) {
+        search(newVal) {
             this.query = newVal;
+        },
+    },
+
+    computed: {
+        indexedResults() {
+            return _.map(this.results, (item, index) => {
+                return { index, ...item }
+            })
+        },
+
+        formattedGroups() {
+            return _.chain(this.indexedResults)
+                .map(item => {
+                    return {
+                        resourceName: item.resourceName,
+                        resourceTitle: item.resourceName,
+                    }
+                })
+                .uniqBy('resourceName')
+                .value()
+        },
+
+        formattedResults() {
+            return _.map(this.formattedGroups, group => {
+                return {
+                    resourceName: group.resourceName,
+                    resourceTitle: group.resourceTitle,
+                    items: filter(
+                        this.indexedResults,
+                        item => item.resourceName == group.resourceName
+                    ),
+                }
+            })
+        },
+
+        hasSearchTerm() {
+            return this.query && this.query.length && this.query != '';
+        },
+
+        hasResults() {
+            return this.results && this.results.length > 0
+        },
+
+        shouldShowNoResults() {
+            return (
+                this.currentlySearching &&
+                !this.loading &&
+                !this.hasResults &&
+                this.hasSearchTerm
+            )
+        },
+
+        shouldShowResults() {
+            return this.currentlySearching && this.hasResults && !this.loading
         },
     },
 
@@ -140,7 +231,11 @@ export default {
     methods: {
 
         handleInput() {
-            if (this.query.length < 1 || this.query == ' ') {
+            this.loading = true
+
+            if (!this.hasSearchTerm) {
+                this.results = [];
+                this.loading = false;
                 return;
             }
 
@@ -151,6 +246,7 @@ export default {
 
         doSearch() {
             if (!this.url) {
+                this.loading = false
                 return this.$emit('search', this.query);
             }
 
@@ -160,8 +256,12 @@ export default {
 
             this.open();
 
-            axios.get(`${this.url}/${this.query}`)
-                .then(({data}) => this.results = data);
+            axios.get(`${this.url}/${this.query}`, {params: this.params})
+                .then(({data}) => {
+                    this.loading = false;
+                    this.results = data
+                });
+
         },
 
         /**
@@ -177,35 +277,53 @@ export default {
                     this.selected = newIndex
                     this.updateScrollPosition()
                 }
+
+                if (newIndex < 0) {
+                    this.selected = this.results.length - 1
+                    this.updateScrollPosition()
+                } else if (newIndex > this.results.length - 1) {
+                    this.selected = 0
+                    this.updateScrollPosition()
+                } else if (newIndex >= 0 && newIndex < this.results.length) {
+                    this.selected = newIndex
+                    this.updateScrollPosition()
+                }
             }
         },
 
        updateScrollPosition() {
-            Vue.nextTick(() => {
-                if (this.$refs.selected) {
-                    if (
-                        this.$refs.selected[0].offsetTop >
-                        this.$refs.container.scrollTop +
-                            this.$refs.container.clientHeight -
-                            this.$refs.selected[0].clientHeight
-                    ) {
-                        this.$refs.container.scrollTop =
-                            this.$refs.selected[0].offsetTop +
-                            this.$refs.selected[0].clientHeight -
-                            this.$refs.container.clientHeight
-                    }
+            if (!this.url) {
+               return;
+            }
 
-                    if (this.$refs.selected[0].offsetTop < this.$refs.container.scrollTop) {
-                        this.$refs.container.scrollTop = this.$refs.selected[0].offsetTop
+            const selection = this.$refs.selected
+            const container = this.$refs.container
+
+            this.$nextTick(() => {
+                if (selection) {
+                    if (
+                        selection[0].offsetTop >
+                        container.scrollTop + container.clientHeight - selection[0].clientHeight
+                    ) {
+                        container.scrollTop =
+                            selection[0].offsetTop +
+                            selection[0].clientHeight -
+                            container.clientHeight
+                    }
+                    if (selection[0].offsetTop < container.scrollTop) {
+                        container.scrollTop = selection[0].offsetTop
                     }
                 }
             })
         },
 
         chooseSelected() {
-            if (this.results[this.selected] !== undefined) {
-                this.choose(this.results[this.selected])
-            }
+            const resource = _.find(
+                this.indexedResults,
+                res => res.index == this.selected
+            )
+
+            this.choose(resource)
         },
 
         choose(option) {
@@ -214,7 +332,9 @@ export default {
                 this.form[this.name] = option[this.resultValue];
             }
 
-            this.$emit('selected', option)
+            this.clearError();
+
+            this.$emit('changed', option);
 
             Vue.nextTick(() => this.close())
 
@@ -222,17 +342,25 @@ export default {
         },
 
         open() {
+            if (!this.url) {
+                return;
+            }
+
             this.show = true;
+            this.currentlySearching = true
         },
 
         close() {
             this.show = false;
+            this.currentlySearching = false
+            this.loading = false
         },
 
         clear() {
             this.query = null;
             this.show = false;
             this.results = [];
+            this.form[this.name] = null;
 
             this.$emit('clear');
 

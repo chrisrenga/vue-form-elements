@@ -9,7 +9,7 @@
         <textarea
             ref="formElement"
             v-model="form[name]"
-            @keyup="form.errors.clear(name)"
+            @keyup="showErrors ? form.errors.clear(name) : null"
             :class="{ 'border-red-500': showErrors && form.errors.has(name) }"
             class="form-input"
             :required="required"
@@ -17,6 +17,7 @@
             :placeholder="placeholder"
             :rows="rows"
             :maxlength="maxlength"
+            :disabled="disabled"
         ></textarea>
     </div>
 </layout>

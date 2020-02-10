@@ -5,32 +5,30 @@
     :name="name"
     :show-errors="showErrors"
 >
-    <div class="relative w-full">
+    <div class="relative w-full inline-flex items-center">
         <input
             ref="formElement"
             v-model="form[name]"
-            @keyup="showErrors ? form.errors.clear(name) : null"
+            @change="changed"
             :class="{ 'border-red-500': showErrors && form.errors.has(name) }"
-            class="form-input"
-            :type="type"
+            class=""
+            type="checkbox"
             :required="required"
-            :pattern="type === 'number' ? '[0-9]*' : null"
             :name="name"
-            :placeholder="placeholder"
             :disabled="disabled"
         >
+        <span v-if="description" class="ml-2" v-html="description"></span>
     </div>
 </layout>
 </template>
 <script>
 import Base from '../mixins/base'
-import { events } from '../events'
 
 export default {
     props: {
-        type: {
+        description: {
             type: String,
-            default: 'text'
+            default: null,
         },
     },
 

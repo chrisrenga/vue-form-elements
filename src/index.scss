@@ -23,7 +23,7 @@
 }
 
 .counter-btn {
-    @apply flex items-center justify-center border rounded-full w-8 h-8 shadow bg-gray-400;
+    @apply flex items-center justify-center border rounded-full w-10 h-8 shadow bg-gray-400;
 
     &:hover {
         @apply bg-gray-600;

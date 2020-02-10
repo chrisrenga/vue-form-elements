@@ -1,6 +1,8 @@
 # Vue Form Elements
 Vue.js Form compoents with a TailwindCss stylesheet
 
+!! WIP !!
+
 ## Installation
 
 ```
@@ -19,7 +21,7 @@ import {FormInput, FormSelect} from '@chrisrenga/vue-form-elements'
 ```
 Globally
 ```js
-Vue.component('form-input', FormInput);
+Vue.component('v-form-input', FormInput);
 ```
 Or in another component
 ```js
@@ -35,10 +37,10 @@ import style from '@chrisrenga/vue-form-elements/dist/index.css'
 
 ## Components
 
-### form-input
+### v-form-input
 
 ```html
-<form-input
+<v-form-input
     label="Name"
     name="name"
     :form="form"
@@ -50,9 +52,9 @@ import style from '@chrisrenga/vue-form-elements/dist/index.css'
 />
 ```
 
-### form-select
+### v-form-select
 ```html
-<form-select
+<v-form-select
     label="Membership Type"
     :options="[
         {name: 'value 1', value: 1},
@@ -64,17 +66,17 @@ import style from '@chrisrenga/vue-form-elements/dist/index.css'
     option-value="value"
 />
 ```
-### form-money
-### form-counter
-### form-search
-### form-textarea
-### form-creator
+### v-form-money
+### v-form-counter
+### v-form-search
+### v-form-textarea
+### v-form-creator
 
-### Form Creator
+### v-form Creator
 Automatically create a form with the defined field components
 
 ```html
-<form-creator
+<v-form-creator
     action="/form-submit"
     method="POST"
     :ajax="false"
@@ -130,17 +132,17 @@ Automatically create a form with the defined field components
             value: 'I',
         },
     ]"
-></form-creator>
+></v-form-creator>
 ```
 
 ## Non Ajax forms
 
 #### Setting errors and old values with Laravel
 ```html
-<form-input
+<v-form-input
     label="Name"
     name="name"
     :errors='@json($errors->get("name"))'
     :value='@json(old("name"))'
-></form-input>
+></v-form-input>
 ```

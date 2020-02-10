@@ -1,9 +1,15 @@
 import Form from 'form-backend-validation'
 
 import Layout from '../components/Base/Layout'
+import Loader from '../components/Base/Loader';
 
 export default {
     props: {
+        inputClass: {
+            type: String,
+            default: 'form-input',
+        },
+
         errors: {
             type: Array,
             default: () => [],
@@ -46,28 +52,28 @@ export default {
             type: String,
             default: null,
         },
+
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     components: {
         Layout,
-    },
-
-    computed: {
-        model() {
-            // legacy
-            return this.name;
-        },
+        Loader,
     },
 
     watch: {
         value(newVal) {
             this.form[this.name] = newVal;
-            this.changed();
         },
     },
 
     created() {
-        this.form[this.name] = this.value;
+        if (this.value) {
+            this.form[this.name] = this.value;
+        }
 
         if(this.errors.length) {
             this.form.errors.errors[this.name] = this.errors;
@@ -82,11 +88,15 @@ export default {
 
     methods: {
         changed(element = null) {
+            this.clearError();
+
+            this.$emit('changed', this.form ? this.form[this.name] : element.target.value);
+        },
+
+        clearError() {
             if(this.form && this.form.errors) {
                 this.form.errors.clear(this.name)
             }
-
-            this.$emit('changed', this.form ? this.form[this.name] : element.target.value);
         },
     },
 }
