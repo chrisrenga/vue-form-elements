@@ -53,6 +53,11 @@ export default {
             default: null,
         },
 
+        autocomplete: {
+            type: String,
+            default: null,
+        },
+
         disabled: {
             type: Boolean,
             default: false,
@@ -72,7 +77,7 @@ export default {
 
     created() {
         if (this.value) {
-            this.form[this.name] = this.value;
+            Vue.set(this.form, this.name, this.value);
         }
 
         if(this.errors.length) {

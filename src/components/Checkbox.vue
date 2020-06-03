@@ -11,7 +11,7 @@
             v-model="form[name]"
             @change="changed"
             :class="{ 'border-red-500': showErrors && form.errors.has(name) }"
-            class=""
+            class="checkbox mr-2"
             type="checkbox"
             :required="required"
             :name="name"

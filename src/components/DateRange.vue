@@ -10,6 +10,7 @@
 
     <div class="relative w-full">
         <input
+            :key="keyValue"
             ref="formElement"
             v-model="form[name]"
             @input="showErrors ? form.errors.clear(name) : null"
@@ -60,7 +61,16 @@ export default {
 
     data: () => ({
         flatpickr: null,
+        keyValue: 1,
     }),
+
+    watch: {
+        value(newVal) {
+            Vue.set(this.form, this.name, newVal);
+            this.flatpickr.setDate(newVal)
+            this.fillFields()
+        },
+    },
 
     created() {
         if (!this.form[this.fromName] || !this.form[this.toName]) {
@@ -101,9 +111,9 @@ export default {
             this.fillFields()
 
             this.$emit('changed', {
-                value: this.rangeValue,
-                from: this.from,
-                to: this.to,
+                value: this.form[this.name],
+                from: this.form[this.fromName],
+                to: this.form[this.toName],
             });
         },
     },

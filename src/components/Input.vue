@@ -18,6 +18,7 @@
             :name="name"
             :placeholder="placeholder"
             :disabled="disabled"
+            :autocomplete="autocomplete"
         >
     </div>
 </layout>

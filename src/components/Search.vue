@@ -89,12 +89,12 @@
             <div
                 v-for="item in group.items"
                 :key="item.resourceName + ' ' + item.index"
-                :ref="item.index === selected ? 'selected' : null"
+                :ref="item.index === highlightedResultIndex ? 'selected' : null"
                 class="px-4 py-2 cursor-pointer hover:bg-gray-400 text-left"
                 @click.prevent="choose(item)"
                 :class="{
-                    'hover:bg-30': item.index != selected,
-                    'bg-blue-400 text-white': item.index == selected
+                    'hover:bg-30': highlightedResultIndex != item.index,
+                    'bg-blue-400 text-white': highlightedResultIndex == item.index
                 }"
                 v-html="getResultValue(item)"
             ></div>
@@ -146,13 +146,13 @@ export default {
             show: false,
             query: this.search,
             results: [],
-            selected: 0,
+            highlightedResultIndex: 0,
         }
     },
 
     watch: {
         query(search) {
-            this.selected = 0
+            this.highlightedResultIndex = 0
 
             Vue.nextTick(() => {
                 if (this.show) {
@@ -245,13 +245,15 @@ export default {
         },
 
         doSearch() {
+            this.highlightedResultIndex = 0
+
             if (!this.url) {
                 this.loading = false
                 return this.$emit('search', this.query);
             }
 
             if (!this.query) {
-                return this.results = null;
+                return this.results = [];
             }
 
             this.open();
@@ -270,22 +272,17 @@ export default {
         debouncer: debounce(callback => callback(), 500),
 
         move(offset) {
-            if (this.show) {
-                let newIndex = this.selected + offset
-
-                if (newIndex >= 0 && newIndex < this.results.length) {
-                    this.selected = newIndex
-                    this.updateScrollPosition()
-                }
+            if (this.results.length) {
+                let newIndex = this.highlightedResultIndex + offset
 
                 if (newIndex < 0) {
-                    this.selected = this.results.length - 1
+                    this.highlightedResultIndex = this.results.length - 1
                     this.updateScrollPosition()
                 } else if (newIndex > this.results.length - 1) {
-                    this.selected = 0
+                    this.highlightedResultIndex = 0
                     this.updateScrollPosition()
                 } else if (newIndex >= 0 && newIndex < this.results.length) {
-                    this.selected = newIndex
+                    this.highlightedResultIndex = newIndex
                     this.updateScrollPosition()
                 }
             }
@@ -320,7 +317,7 @@ export default {
         chooseSelected() {
             const resource = _.find(
                 this.indexedResults,
-                res => res.index == this.selected
+                res => res.index == this.highlightedResultIndex
             )
 
             this.choose(resource)

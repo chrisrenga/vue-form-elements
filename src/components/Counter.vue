@@ -8,10 +8,10 @@
     <div class="flex">
         <button
             @click.prevent="remove"
-            :class="{'cursor-not-allowed': form[name] <= 1}"
+            :class="{'cursor-not-allowed': form[name] <= min}"
             class="counter-btn"
             type="button"
-            :disabled="form[name] <= 1"
+            :disabled="form[name] <= min"
         >
             -
         </button>
@@ -20,8 +20,8 @@
             @input="changed"
             v-model.number="form[name]"
             type="number"
-            min="1"
-            class="text-center appearance-none px-0 text-xl mx-1 w-10 bg-transparent"
+            :min="min"
+            class="counter-input"
             :class="{ 'text-red-500': showErrors && form.errors.has(name) }"
             step="1"
             pattern="[0-9]*"
@@ -45,11 +45,22 @@ export default {
     props: {
         value: {
             type: Number,
+            default: null,
+        },
+
+        min: {
+            type: Number,
             default: 1,
         },
     },
 
     mixins: [Base],
+
+    mounted() {
+        if (!this.value && !this.form[this.name]) {
+            Vue.set(this.form, this.name, this.min);
+        }
+    },
 
     methods: {
         add() {
@@ -58,7 +69,7 @@ export default {
         },
 
         remove() {
-            if(this.form[this.name] <= 1) {
+            if(this.form[this.name] <= this.min) {
                 return;
             }
             this.form[this.name]--;
