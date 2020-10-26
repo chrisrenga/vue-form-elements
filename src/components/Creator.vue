@@ -41,6 +41,9 @@
             :from-name="field.fromName"
             :to-name="field.toName"
             :params="field.params"
+            :autocomplete="field.autocomplete"
+            :autofocus="field.autofocus"
+            :min="field.min"
             @changed="emit(field.name + 'Changed', $event)"
             @created="emit(field.name + 'Created', $event)"
         />

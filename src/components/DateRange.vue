@@ -73,6 +73,10 @@ export default {
     },
 
     created() {
+        if (this.value) {
+            Vue.set(this.form, this.name, this.value);
+        }
+
         if (!this.form[this.fromName] || !this.form[this.toName]) {
             this.fillFields()
         }

@@ -4,6 +4,7 @@
     :errors="form.errors"
     :name="name"
     :show-errors="showErrors"
+    inline
 >
     <div class="flex">
         <button
