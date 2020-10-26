@@ -37,7 +37,7 @@
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11",
     "form-backend-validation": "^2.3.9",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "dependencies": {
     "vue-clickaway": "^2"
