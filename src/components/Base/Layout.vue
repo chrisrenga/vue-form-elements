@@ -1,6 +1,6 @@
 <template>
 <div class="md:w-1/2 mb-2 md:mb-0">
-    <label class="relative" :class="{'inline-block': inline}">
+    <label class="relative block" :class="{'inline-block': inline}">
         <span v-if="label" class="block mb-1">{{ label }}</span>
 
         <slot/>
