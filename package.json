@@ -1,10 +1,17 @@
 {
   "name": "@chrisrenga/vue-form-elements",
   "description": "Vue.js Form Elements Library",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "chrisrenga",
   "private": false,
   "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisrenga/vue-form-elements.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "npm run development",
