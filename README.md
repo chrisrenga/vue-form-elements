@@ -3,12 +3,6 @@ Vue.js Form compoents with a TailwindCss stylesheet
 
 !! WIP !!
 
-## Installation
-
-```
-yarn add github:@chrisrenga/vue-form-elements
-```
-
 Register the Plugin
 ```js
 import FormElements from '@chrisrenga/vue-form-elements'
