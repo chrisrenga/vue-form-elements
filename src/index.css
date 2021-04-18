@@ -1,6 +1,5 @@
-@tailwind base;
-
-@tailwind components;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 
 .form-input {
     @apply block appearance-none w-full py-2 px-2 text-base bg-white text-gray-700 border border-gray-200 rounded shadow;
@@ -66,4 +65,4 @@ input[type=number].appearance-none {
     }
 }
 
-@tailwind utilities;
+@import 'tailwindcss/utilities';

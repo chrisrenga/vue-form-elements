@@ -1,16 +1,27 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+let path = require("path");
 
-require("laravel-mix-tailwind");
-require("laravel-mix-purgecss");
+/*
+ |--------------------------------------------------------------------------
+ | Mix Asset Management
+ |--------------------------------------------------------------------------
+ |
+ | Mix provides a clean, fluent API for defining some Webpack build steps
+ | for your Laravel applications. By default, we are compiling the CSS
+ | file for the application as well as bundling up all the JS files.
+ |
+ */
 
 mix.setPublicPath('dist')
-    .sass("src/index.scss", "dist")
-    .js("src/index.js", "dist")
-    .copy("src/index.scss", "dist")
-    .tailwind('tailwind.config.js')
+    .js('src/index.js', 'dist')
+    .vue()
+    .postCss('src/index.css', 'dist', [
+        require('postcss-nested'),
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
 
-if (mix.inProduction()) {
-    mix.purgeCss({
-        folders: ['src', 'dist']
-    })
-}
+mix.browserSync({
+    proxy: path.basename(__dirname) + '.test',
+});

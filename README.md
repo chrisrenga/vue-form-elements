@@ -79,7 +79,6 @@ Automatically create a form with the defined field components
 <v-form-creator
     action="/form-submit"
     method="POST"
-    :ajax="false"
     sumbitText="Save"
     :fields="[
         {
@@ -140,6 +139,7 @@ Automatically create a form with the defined field components
 #### Setting errors and old values with Laravel
 ```html
 <v-form-input
+    :ajax="false"
     label="Name"
     name="name"
     :errors='@json($errors->get("name"))'
