@@ -38,7 +38,7 @@
 }
 
 .counter-input {
-    @apply text-center appearance-none px-0 text-xl mx-2 w-10 bg-transparent;
+    @apply text-center appearance-none px-0 text-xl mx-2 w-10 bg-transparent border-none;
     -moz-appearance: textfield;
 
     &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
