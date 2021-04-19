@@ -6,7 +6,7 @@
     :show-errors="showErrors"
     :inline="true"
 >
-    <div class="flex">
+    <div class="flex items-center">
         <button
             @click.prevent="remove"
             :class="{'cursor-not-allowed': form[name] <= min}"
